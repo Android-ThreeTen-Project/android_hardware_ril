@@ -69,6 +69,11 @@ cc_library_shared {
             "-DOEM_HOOK_DISABLED",
         ],
         default: [],
+    }) + select(soong_config_variable("ril", "uses_old_mnc_format"), {
+        true: [
+            "-DOLD_MNC_FORMAT",
+        ],
+        default: [],
     }),
     include_dirs: ["external/nanopb-c"],
     header_libs: [
