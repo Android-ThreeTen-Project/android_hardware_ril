@@ -2948,7 +2948,7 @@ Return<void> OemHookImpl::setResponseFunctions(
 #endif
 
     pthread_rwlock_t *radioServiceRwlockPtr = radio::getRadioServiceRwlock(mSlotId);
-    int ret = pthread_rwlock_wrlock(radioServiceRwlockPtr);
+    [[maybe_unused]] int ret = pthread_rwlock_wrlock(radioServiceRwlockPtr);
     assert(ret == 0);
 
     mOemHookResponse = oemHookResponseParam;
@@ -8744,7 +8744,8 @@ void radio::registerService(RIL_RadioFunctions *callbacks, CommandInfo *commands
         radioService[i]->mSlotId = i;
         RLOGD("registerService: starting android::hardware::radio::V1_1::IRadio %s",
                 serviceNames[i]);
-        android::status_t status = radioService[i]->registerAsService(serviceNames[i]);
+        [[maybe_unused]] android::status_t status =
+                radioService[i]->registerAsService(serviceNames[i]);
 
         if (kOemHookEnabled) {
             oemHookService[i] = new OemHookImpl;
