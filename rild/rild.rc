@@ -1,5 +1,8 @@
 service vendor.ril-daemon /vendor/bin/hw/rild
     class main
     user radio
-    group radio cache inet misc audio log readproc wakelock
+    # msm8994's legacy IPC Router checks AID_NET_RAW in the supplementary
+    # group list when rild sends QMI messages; Linux capabilities alone are
+    # not sufficient for that kernel-side security rule.
+    group radio cache inet misc audio log readproc wakelock net_raw
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
