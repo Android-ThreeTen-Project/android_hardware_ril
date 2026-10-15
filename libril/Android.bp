@@ -43,6 +43,7 @@ cc_library_shared {
     shared_libs: [
         "android.hardware.radio@1.0",
         "android.hardware.radio@1.1",
+        "android.hardware.radio.deprecated@1.0",
         "libcutils",
         "libhardware_legacy",
         "libhidlbase",
@@ -67,6 +68,11 @@ cc_library_shared {
     }) + select(soong_config_variable("ril", "disable_rild_oem_hook"), {
         true: [
             "-DOEM_HOOK_DISABLED",
+        ],
+        default: [],
+    }) + select(soong_config_variable("ril", "uses_old_mnc_format"), {
+        true: [
+            "-DOLD_MNC_FORMAT",
         ],
         default: [],
     }),
